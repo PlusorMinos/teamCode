@@ -84,14 +84,14 @@ public class HardwareDrive
         frontRightMotor = hwMap.get(DcMotor.class, "fR");
         backLeftMotor    = hwMap.get(DcMotor.class, "bL");
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
-        lift            = hwMap.get(DcMotor.class,  "lift");
+        //lift            = hwMap.get(DcMotor.class,  "lift");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        lift.setPower(0);
+        //lift.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -99,12 +99,12 @@ public class HardwareDrive
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servo
-        smite = hwMap.get(Servo.class, "slap");
+        /*smite = hwMap.get(Servo.class, "slap");
         grabL = hwMap.get(Servo.class, "gL");
-        grabR = hwMap.get(Servo.class, "gR");
+        grabR = hwMap.get(Servo.class, "gR");*/
 
     }
     /*public void drive(double forward, double side, double spin, double up, boolean grab){
