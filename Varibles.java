@@ -7,6 +7,5 @@ package org.firstinspires.ftc.teamcode;
 public class Varibles {
 
     public static final double POWER = 0.8;
-    public static final double Slapper_start = .5;
 
 }

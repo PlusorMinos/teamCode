@@ -107,7 +107,7 @@ public class HardwareDrive
         grabR = hwMap.get(Servo.class, "gR");
 
     }
-    public void drive(double forward, double side, double spin, double up, boolean grab){
+    /*public void drive(double forward, double side, double spin, double up, boolean grab){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -151,7 +151,37 @@ public class HardwareDrive
             grabL.setPosition(.2);
             grabR.setPosition(0);
             smite.setPosition(1.1);
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+        }
+    }*/
+    public void drive(double forward, double side, double spin){
+
+        double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
+        double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
+        double backLeftPower = forward*var.POWER +side*var.POWER + spin*var.POWER;
+        double backRightPower = -forward*var.POWER +side*var.POWER + spin*var.POWER;
+
+        if(frontLeftPower > 1.0)
+            frontLeftPower = 1.0;
+        if(frontLeftPower < -1.0)
+            frontLeftPower = -1.0;
+        if(frontRightPower > 1.0)
+            frontRightPower = 1.0;
+        if(frontRightPower < -1.0)
+            frontRightPower = -1.0;
+        if(backLeftPower > 1.0)
+            backLeftPower = 1.0;
+        if(backLeftPower < -1.0)
+            backLeftPower = -1.0;
+        if(backRightPower > 1.0)
+            backRightPower = 1.0;
+        if(backRightPower < -1.0)
+            backRightPower = -1.0;
+
+        //for drive dircation
+        frontLeftMotor.setPower(frontLeftPower);
+        frontRightMotor.setPower(frontRightPower);
+        backLeftMotor.setPower(backLeftPower);
+        backRightMotor.setPower(backRightPower);
     }
     public void spinLeft(){
 

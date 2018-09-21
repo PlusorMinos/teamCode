@@ -79,19 +79,19 @@ public class Drive extends LinearOpMode {
             double forwardPower;
             double sidePower;
             double spinPower;
-            double lift;
-            boolean grab;
-            boolean release;
+//            double lift;
+//            boolean grab;
+//            boolean release;
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
             forwardPower = gamepad1.left_stick_y;
             sidePower    = -gamepad1.left_stick_x;
             spinPower    = gamepad1.right_stick_x;
-            lift         = gamepad2.left_stick_y;
-            grab         = gamepad2.a;
-            release      = gamepad2.b;
-            robot.drive(forwardPower, sidePower, spinPower, lift, grab);
+//            lift         = gamepad2.left_stick_y;
+//            grab         = gamepad2.a;
+//            release      = gamepad2.b;
+            robot.drive(forwardPower, sidePower, spinPower);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
