@@ -60,10 +60,6 @@ public class HardwareDrive
     public DcMotor  frontRightMotor  = null;
     public DcMotor  backLeftMotor = null;
     public DcMotor  backRightMotor = null;
-    public DcMotor  lift = null;
-    public Servo    smite = null;
-    public Servo    grabL = null;
-    public Servo    grabR = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -84,14 +80,12 @@ public class HardwareDrive
         frontRightMotor = hwMap.get(DcMotor.class, "fR");
         backLeftMotor    = hwMap.get(DcMotor.class, "bL");
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
-        //lift            = hwMap.get(DcMotor.class,  "lift");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        //lift.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -99,7 +93,6 @@ public class HardwareDrive
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servo
         /*smite = hwMap.get(Servo.class, "slap");
@@ -237,12 +230,6 @@ public class HardwareDrive
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
 
-    }
-    public void Smite(){
-        smite.setPosition(0);
-    }
-    public void Smote(){
-        smite.setPosition(1.1);
     }
  }
 

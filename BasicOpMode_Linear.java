@@ -29,17 +29,12 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpModeManager;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
-import org.firstinspires.ftc.teamcode.HardwareDrive;
-import org.firstinspires.ftc.teamcode.Varibles;
 
 
 /**
@@ -55,9 +50,9 @@ import org.firstinspires.ftc.teamcode.Varibles;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="K9bot: Telop Tank", group="Opmode")
+@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
 //@Disabled
-public class Drive extends LinearOpMode {
+public class BasicOpMode_Linear extends LinearOpMode {
 
     // Declare OpMode members.
     HardwareDrive robot = new HardwareDrive();
@@ -97,5 +92,3 @@ public class Drive extends LinearOpMode {
         }
     }
 }
-
-
