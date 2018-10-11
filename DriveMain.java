@@ -29,12 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 
 /**
@@ -50,9 +47,9 @@ import com.qualcomm.robotcore.util.Range;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@TeleOp(name="Basic: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Main Drive", group="Opmode")
 //@Disabled
-public class BasicOpMode_Linear extends LinearOpMode {
+public class DriveMain extends LinearOpMode {
 
     // Declare OpMode members.
     HardwareDrive robot = new HardwareDrive();
@@ -77,13 +74,15 @@ public class BasicOpMode_Linear extends LinearOpMode {
             double forwardPower;
             double sidePower;
             double spinPower;
+            double arm;
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
-            forwardPower = gamepad1.left_stick_y;
+            forwardPower = -gamepad1.left_stick_y;
             sidePower    = -gamepad1.left_stick_x;
             spinPower    = gamepad1.right_stick_x;
-            robot.drive(forwardPower, sidePower, spinPower);
+            arm          = -gamepad2.left_stick_y;
+            robot.drive(forwardPower, sidePower, spinPower, arm);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -92,3 +91,5 @@ public class BasicOpMode_Linear extends LinearOpMode {
         }
     }
 }
+
+

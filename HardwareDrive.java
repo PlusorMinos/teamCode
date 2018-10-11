@@ -60,6 +60,8 @@ public class HardwareDrive
     public DcMotor  frontRightMotor  = null;
     public DcMotor  backLeftMotor = null;
     public DcMotor  backRightMotor = null;
+    public DcMotor  armLeft = null;
+    public DcMotor  armRight = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -80,12 +82,16 @@ public class HardwareDrive
         frontRightMotor = hwMap.get(DcMotor.class, "fR");
         backLeftMotor    = hwMap.get(DcMotor.class, "bL");
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
+        armLeft    = hwMap.get(DcMotor.class, "aL");
+        armRight    = hwMap.get(DcMotor.class, "aR");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
+        armLeft.setPower(0);
+        armRight.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -93,6 +99,8 @@ public class HardwareDrive
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servo
         /*smite = hwMap.get(Servo.class, "slap");
@@ -146,7 +154,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin){
+    public void drive(double forward, double side, double spin, double arm){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -170,11 +178,19 @@ public class HardwareDrive
         if(backRightPower < -1.0)
             backRightPower = -1.0;
 
+
+        if(arm > 1.0)
+            arm = 1.0;
+        if(arm < -1.0)
+            arm = -1.0;
+
         //for drive dircation
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
+        armLeft.setPower(arm);
+        armRight.setPower(arm);
     }
     public void spinLeft(){
 
