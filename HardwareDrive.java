@@ -62,6 +62,7 @@ public class HardwareDrive
     public DcMotor  backRightMotor = null;
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
+    public DcMotor  armString = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -84,6 +85,7 @@ public class HardwareDrive
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
         armLeft    = hwMap.get(DcMotor.class, "aL");
         armRight    = hwMap.get(DcMotor.class, "aR");
+        armString    = hwMap.get(DcMotor.class, "aS");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -92,6 +94,7 @@ public class HardwareDrive
         backRightMotor.setPower(0);
         armLeft.setPower(0);
         armRight.setPower(0);
+        armString.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -101,6 +104,7 @@ public class HardwareDrive
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servo
         /*smite = hwMap.get(Servo.class, "slap");
@@ -191,6 +195,7 @@ public class HardwareDrive
         backRightMotor.setPower(backRightPower);
         armLeft.setPower(arm);
         armRight.setPower(arm);
+        armString.setPower(arm);
     }
     public void spinLeft(){
 
