@@ -62,7 +62,9 @@ public class HardwareDrive
     public DcMotor  backRightMotor = null;
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
-    public DcMotor  armString = null;
+    //public DcMotor  armString = null;
+    public DcMotor  strutLeft = null;
+    public DcMotor  strutRight = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -85,7 +87,9 @@ public class HardwareDrive
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
         armLeft    = hwMap.get(DcMotor.class, "aL");
         armRight    = hwMap.get(DcMotor.class, "aR");
-        armString    = hwMap.get(DcMotor.class, "aS");
+        //armString    = hwMap.get(DcMotor.class, "aS");
+        strutLeft = hwMap.get(DcMotor.class, "sL");
+        strutRight = hwMap.get(DcMotor.class, "sR");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -94,7 +98,9 @@ public class HardwareDrive
         backRightMotor.setPower(0);
         armLeft.setPower(0);
         armRight.setPower(0);
-        armString.setPower(0);
+        //armString.setPower(0);
+        strutRight.setPower(0);
+        strutLeft.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -104,7 +110,10 @@ public class HardwareDrive
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        strutLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        strutRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
         // Define and initialize ALL installed servo
         /*smite = hwMap.get(Servo.class, "slap");
@@ -158,7 +167,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm){
+    public void drive(double forward, double side, double spin, double arm, double strut){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -195,7 +204,9 @@ public class HardwareDrive
         backRightMotor.setPower(backRightPower);
         armLeft.setPower(arm);
         armRight.setPower(arm);
-        armString.setPower(arm);
+        //armString.setPower(arm);
+        strutLeft.setPower(strut);
+        strutRight.setPower(strut);
     }
     public void spinLeft(){
 
@@ -254,3 +265,4 @@ public class HardwareDrive
     }
  }
 
+ 
