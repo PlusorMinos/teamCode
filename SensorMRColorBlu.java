@@ -97,7 +97,7 @@ public class SensorMRColorBlu extends LinearOpMode {
    // while the op mode is active, loop and read the RGB data.
    // Note we use opModeIsActive() as our loop condition because it is an interruptible method.
    while (opModeIsActive()) {
-       robot.Smite();
+       //robot.Smite();
 
 
      // check the status of the x button on either gamepad.
@@ -141,7 +141,7 @@ public class SensorMRColorBlu extends LinearOpMode {
            robot.Stop();
            sleep(100);
            robot.spinRight();
-           robot.Smote();
+           //robot.Smote();
            sleep(500);
            sleep(1000);
            robot.back();
@@ -154,7 +154,7 @@ public class SensorMRColorBlu extends LinearOpMode {
            robot.Stop();
            sleep(100);
            robot.spinRight();
-           robot.Smote();
+           //robot.Smote();
            sleep(500);
            sleep(1000);
            robot.back();
