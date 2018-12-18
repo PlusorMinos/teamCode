@@ -65,6 +65,8 @@ public class HardwareDrive
     //public DcMotor  armString = null;
     public DcMotor  strutLeft = null;
     public DcMotor  strutRight = null;
+    public DcMotor midArm = null;
+    public Servo hook = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -90,6 +92,8 @@ public class HardwareDrive
         //armString    = hwMap.get(DcMotor.class, "aS");
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
+        //midArm = hwMap.get(DcMotor.class, "mA");
+        hook = hwMap.get(Servo.class, "hook");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -167,7 +171,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, double strut){
+    public void drive(double forward, double side, double spin, double arm, double strut, boolean hookF, boolean hookB){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -192,10 +196,20 @@ public class HardwareDrive
             backRightPower = -1.0;
 
 
-        if(arm > 1.0)
-            arm = 1.0;
-        if(arm < -1.0)
-            arm = -1.0;
+        if(arm > var.ARMP)
+            arm = var.ARMP;
+        if(arm < -var.ARMP)
+            arm = -var.ARMP;
+
+        if (hookF){
+            hook.setPosition(1);
+        }
+        else if (hookB){
+            hook.setPosition(0);
+        }
+        else {
+            hook.setPosition(0.5);
+        }
 
         //for drive dircation
         frontLeftMotor.setPower(frontLeftPower);

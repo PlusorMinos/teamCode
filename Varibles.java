@@ -7,5 +7,6 @@ package org.firstinspires.ftc.teamcode;
 public class Varibles {
 
     public static final double POWER = 0.8;
+    public static final double ARMP = 0.2;
 
 }

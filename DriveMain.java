@@ -31,6 +31,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
@@ -76,6 +77,8 @@ public class DriveMain extends LinearOpMode {
             double spinPower;
             double arm;
             double strut;
+            boolean hookF;
+            boolean hookB;
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
@@ -84,7 +87,10 @@ public class DriveMain extends LinearOpMode {
             spinPower    = gamepad1.right_stick_x;
             arm          = -gamepad2.left_stick_y;
             strut        = gamepad2.right_stick_y;
-            robot.drive(forwardPower, sidePower, spinPower, arm, strut);
+            hookF = gamepad2.a;
+            hookB = gamepad2.b;
+
+            robot.drive(forwardPower, sidePower, spinPower, arm, strut, hookF, hookB);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
