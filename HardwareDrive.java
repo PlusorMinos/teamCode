@@ -270,7 +270,7 @@ public class HardwareDrive
         backRightMotor.setPower(-var.POWER);
 
     }
-    public void Stop(){
+    public void stop(){
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
