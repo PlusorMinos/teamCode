@@ -138,7 +138,7 @@ public class SensorMRColorBlu extends LinearOpMode {
        if (cSr>5){
            robot.spinRight();
            sleep(500);
-           robot.Stop();
+           robot.stop();
            sleep(100);
            robot.spinRight();
            //robot.Smote();
@@ -146,12 +146,12 @@ public class SensorMRColorBlu extends LinearOpMode {
            sleep(1000);
            robot.back();
            sleep(1000);
-           robot.Stop();
+           robot.stop();
        }
        if (cSb>5) {
            robot.spinLeft();
            sleep(500);
-           robot.Stop();
+           robot.stop();
            sleep(100);
            robot.spinRight();
            //robot.Smote();
@@ -159,7 +159,7 @@ public class SensorMRColorBlu extends LinearOpMode {
            sleep(1000);
            robot.back();
            sleep(2000);
-           robot.Stop();
+           robot.stop();
        }
 
 

@@ -222,7 +222,7 @@ public class HardwareDrive
         strutLeft.setPower(strut);
         strutRight.setPower(strut);
     }
-    public void spinLeft(){
+    public void spinRight(){
 
         frontLeftMotor.setPower(var.POWER);
         frontRightMotor.setPower(var.POWER);
@@ -230,31 +230,31 @@ public class HardwareDrive
         backRightMotor.setPower(var.POWER);
 
     }
-    public void spinRight(){
+    public void spinLeft(){
 
         frontLeftMotor.setPower(-var.POWER);
         frontRightMotor.setPower(-var.POWER);
         backLeftMotor.setPower(-var.POWER);
-        backRightMotor.setPower(-var.POWER);
-
-    }
-    public void back(){
-
-        frontLeftMotor.setPower(var.POWER);
-        frontRightMotor.setPower(-var.POWER);
-        backLeftMotor.setPower(var.POWER);
         backRightMotor.setPower(-var.POWER);
 
     }
     public void forward(){
 
+        frontLeftMotor.setPower(var.POWER);
+        frontRightMotor.setPower(-var.POWER);
+        backLeftMotor.setPower(var.POWER);
+        backRightMotor.setPower(-var.POWER);
+
+    }
+    public void back(){
+
         frontLeftMotor.setPower(-var.POWER);
         frontRightMotor.setPower(var.POWER);
         backLeftMotor.setPower(-var.POWER);
         backRightMotor.setPower(var.POWER);
 
     }
-    public void Left(){
+    public void Right(){
 
         frontLeftMotor.setPower(-var.POWER);
         frontRightMotor.setPower(-var.POWER);
@@ -262,7 +262,7 @@ public class HardwareDrive
         backRightMotor.setPower(var.POWER);
 
     }
-    public void Right(){
+    public void Left(){
 
         frontLeftMotor.setPower(var.POWER);
         frontRightMotor.setPower(var.POWER);

@@ -84,15 +84,9 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
 
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        robot.spinLeft();
-        runtime.reset();
-        while (opModeIsActive() && runtime.seconds() <= 0.1){
-
-        }
-
         robot.forward();
         runtime.reset();
-        while (opModeIsActive() && runtime.seconds() <= 0.9){
+        while (opModeIsActive() && runtime.seconds() <= 1.2){
 
         }
 
@@ -102,7 +96,7 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
 
         robot.forward();
         runtime.reset();
-        while (opModeIsActive() && runtime.seconds() <= 0.2){
+        while (opModeIsActive() && runtime.seconds() <= 0.5){
 
         }
 
