@@ -51,6 +51,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Servo channel:  Servo to open right claw: "right_hand"
  */
 public class HardwareDrive
+
 {
 
     Varibles var = new Varibles();
@@ -67,6 +68,7 @@ public class HardwareDrive
     public DcMotor  strutRight = null;
     public DcMotor midArm = null;
     public Servo hook = null;
+    public Servo backHook = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -94,6 +96,7 @@ public class HardwareDrive
         strutRight = hwMap.get(DcMotor.class, "sR");
         //midArm = hwMap.get(DcMotor.class, "mA");
         hook = hwMap.get(Servo.class, "hook");
+        backHook = hwMap.get(Servo.class, "backHook");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -275,7 +278,23 @@ public class HardwareDrive
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
+        strutRight.setPower(0);
+        strutLeft.setPower(0);
 
+    }
+    public void strutLiftUp(){
+        strutLeft.setPower(var.POWER);
+        strutRight.setPower(var.POWER);
+    }
+    public void strutLowerDown(){
+        strutRight.setPower(-var.POWER);
+        strutLeft.setPower(-var.POWER);
+    }
+    public void landerHookClose(){
+        hook.setPosition(0);
+    }
+    public void landerHookOpen(){
+        hook.setPosition(.5);
     }
  }
 

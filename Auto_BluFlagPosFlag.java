@@ -82,7 +82,26 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
+
+        //Lower bot off lander
+        robot.strutLowerDown();
+        sleep(1000);
+        robot.stop();
+
+        //Open lander hook so the robot can detach from the lander
+        robot.landerHookOpen();
+        sleep(5000);
+
+        //Retract the legs
+        robot.strutLiftUp();
+        sleep(1000);
+        robot.stop();
+
+        //Close hook for later
+        robot.landerHookClose();
+
+
+//         Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
         robot.forward();
         runtime.reset();
@@ -90,9 +109,9 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
 
         }
 
-        //
+
         //The part for checking balls
-        //
+
 
         robot.forward();
         runtime.reset();
@@ -103,29 +122,29 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         //Drop team flag
 
 
-//        // Step 1:  Drive forward for 3 seconds
-//        robot.forward();
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() <= 3.0)) {
-//            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
-//
-//        // Step 2:  Spin right for 1.3 seconds
-//        robot.spinLeft();
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() <= 1.3)) {
-//            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
-//
-//        // Step 3:  Drive Backwards for 1 Second
-//        robot.back();
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() <= 1.0)) {
-//            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
+        // Step 1:  Drive forward for 3 seconds
+        robot.forward();
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 3.0)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        // Step 2:  Spin right for 1.3 seconds
+        robot.spinLeft();
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 1.3)) {
+            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        // Step 3:  Drive Backwards for 1 Second
+        robot.back();
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 1.0)) {
+            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
 
         // Step 4:  Stop and close the claw.
         robot.stop();
