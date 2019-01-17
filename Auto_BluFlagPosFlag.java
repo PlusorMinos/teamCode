@@ -95,7 +95,7 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         //Open lander hook so the robot can detach from the lander
         robot.landerHookOpen();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 3.5)) {
+        while (opModeIsActive() && (runtime.seconds() <= 2.35)) {
             telemetry.addData("Off Lander", "Opening lander latch: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -104,7 +104,7 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         //Retract the legs
         robot.strutLiftUp();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() <= 1.7)) {
             telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
@@ -113,12 +113,12 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         //Close hook for later
         robot.landerHookClose();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.5)) {
+        while (opModeIsActive() && (runtime.seconds() <= 1.6)) {
             telemetry.addData("Off Lander", "Closing lander latch: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
         robot.landerHookRest();
-        
+
 //         Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
 //        robot.forward();
