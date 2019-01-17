@@ -85,69 +85,87 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
 
         //Lower bot off lander
         robot.strutLowerDown();
-        sleep(1000);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 2.5)) {
+            telemetry.addData("Off Lander", "Lowering down legs: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
         robot.stop();
 
         //Open lander hook so the robot can detach from the lander
         robot.landerHookOpen();
-        sleep(5000);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 3.5)) {
+            telemetry.addData("Off Lander", "Opening lander latch: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        robot.landerHookRest();
 
         //Retract the legs
         robot.strutLiftUp();
-        sleep(1000);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 2.5)) {
+            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
         robot.stop();
 
         //Close hook for later
         robot.landerHookClose();
-
-
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() <= 1.5)) {
+            telemetry.addData("Off Lander", "Closing lander latch: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+        robot.landerHookRest();
+        
 //         Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
-        robot.forward();
-        runtime.reset();
-        while (opModeIsActive() && runtime.seconds() <= 1.2){
+//        robot.forward();
+//        runtime.reset();
+//        while (opModeIsActive() && runtime.seconds() <= 1.2){
+//
+//        }
+//
+//
+//        //The part for checking balls
+//
+//
+//        robot.forward();
+//        runtime.reset();
+//        while (opModeIsActive() && runtime.seconds() <= 0.5){
+//
+//        }
 
-        }
-
-
-        //The part for checking balls
-
-
-        robot.forward();
-        runtime.reset();
-        while (opModeIsActive() && runtime.seconds() <= 0.5){
-
-        }
-
-        //Drop team flag
-
-
-        // Step 1:  Drive forward for 3 seconds
-        robot.forward();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 3.0)) {
-            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 2:  Spin right for 1.3 seconds
-        robot.spinLeft();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.3)) {
-            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 3:  Drive Backwards for 1 Second
-        robot.back();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.0)) {
-            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-
-        // Step 4:  Stop and close the claw.
-        robot.stop();
+//        //Drop team flag
+//
+//
+//        // Step 1:  Drive forward for 3 seconds
+//        robot.forward();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() <= 3.0)) {
+//            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//        // Step 2:  Spin right for 1.3 seconds
+//        robot.spinLeft();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() <= 1.3)) {
+//            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//        // Step 3:  Drive Backwards for 1 Second
+//        robot.back();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() <= 1.0)) {
+//            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//        // Step 4:  Stop and close the claw.
+//        robot.stop();
 
         telemetry.addData("Path", "Complete");
         telemetry.update();

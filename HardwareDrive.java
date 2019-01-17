@@ -214,7 +214,7 @@ public class HardwareDrive
             hook.setPosition(0.5);
         }
 
-        //for drive dircation
+        //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
@@ -257,22 +257,6 @@ public class HardwareDrive
         backRightMotor.setPower(var.POWER);
 
     }
-    public void Right(){
-
-        frontLeftMotor.setPower(-var.POWER);
-        frontRightMotor.setPower(-var.POWER);
-        backLeftMotor.setPower(var.POWER);
-        backRightMotor.setPower(var.POWER);
-
-    }
-    public void Left(){
-
-        frontLeftMotor.setPower(var.POWER);
-        frontRightMotor.setPower(var.POWER);
-        backLeftMotor.setPower(-var.POWER);
-        backRightMotor.setPower(-var.POWER);
-
-    }
     public void stop(){
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
@@ -291,10 +275,19 @@ public class HardwareDrive
         strutLeft.setPower(-var.POWER);
     }
     public void landerHookClose(){
-        hook.setPosition(0);
+        hook.setPosition(1);
+    }
+    public void landerHookRest(){
+        hook.setPosition(.5);
     }
     public void landerHookOpen(){
-        hook.setPosition(.5);
+        hook.setPosition(0);
+    }
+    public void backHookOpen(){
+        backHook.setPosition(.1);
+    }
+    public void backhookClose(){
+        backHook.setPosition(0);
     }
  }
 
