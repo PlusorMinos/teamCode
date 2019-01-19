@@ -84,27 +84,27 @@ public class AutoBlueDepo extends LinearOpMode {
      */
     private TFObjectDetector tfod;
 
-    Spudnik17B robot = new Spudnik17B();
+    HardwareDrive robot = new HardwareDrive();
 
     @Override
     public void runOpMode() {
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
-        robot.init(hardwareMap, this, true, false, false);
-        robot.getDriveTrain().driveZeroPowerBrake();
-
-        telemetry.addData("Status", "Resetting Encoders");
-        telemetry.update();
-
-        robot.getDriveTrain().driveModeStopResetEncoders();
-        idle();
-
-        robot.getDriveTrain().driveModeWithEncoders();
-        robot.getDriveTrain().showDriveTelemetry();
-        telemetry.update();
-
-        robot.getGyro().init(hardwareMap, this, true, true, false);
+//        robot.init(hardwareMap, this, true, false, false);
+//        robot.getDriveTrain().driveZeroPowerBrake();
+//
+//        telemetry.addData("Status", "Resetting Encoders");
+//        telemetry.update();
+//
+//        robot.getDriveTrain().driveModeStopResetEncoders();
+//        idle();
+//
+//        robot.getDriveTrain().driveModeWithEncoders();
+//        robot.getDriveTrain().showDriveTelemetry();
+//        telemetry.update();
+//
+//        robot.getGyro().init(hardwareMap, this, true, true, false);
 
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
             initTfod();
@@ -126,10 +126,10 @@ public class AutoBlueDepo extends LinearOpMode {
 
             while (opModeIsActive()) {
                     if (mLandTime.time() < 10) {
-                        robot.getmLiftArm().up();
+                        //robot.getmLiftArm().up();
                     }else {
-                        robot.getmLiftArm().stop();
-                        robot.getGyro().start();
+                        //robot.getmLiftArm().stop();
+                        //robot.getGyro().start();
                         LocateTFMineral();
                     }
                 }
@@ -185,40 +185,12 @@ public class AutoBlueDepo extends LinearOpMode {
                     if ((goldMineralX >= 1) && (goldMineralX < 300)) {
                         //done!
                         telemetry.addData("Mineral Location", "Left");
-                        robot.getDriveTrain().encoderDrive(0.1, -1, 10);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, 3, 10, 0);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.1, -16, 30, 0);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, -19, 30, 0);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.5, -25, 30, 0);
-                        robot.getDriveTrain().gyroTurn(44, 0.5);
-                        robot.getDriveTrain().encoderStrafe(0.1, -8, 10);
-                        robot.getDriveTrain().encoderDrive(0.3, -10, 10);
-                        robot.getDriveTrain().encoderDriveFast(0.3, 68, 30);
-                        robot.getDriveTrain().encoderDriveFast(0.1, 2, 30);
                     } else if (goldMineralX > 300) {
                         //done!
                         telemetry.addData("Mineral Location", "Center");
-                        robot.getDriveTrain().encoderDrive(0.1, -1, 10);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, 3, 10, 0);
-                        robot.getDriveTrain().encoderDrive(0.1, -1, 10);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, -3, 10, 0);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.2, -60, 30, 0);
-                        robot.getDriveTrain().gyroTurn(43, 0.1);
-                        robot.getDriveTrain().encoderStrafe(0.1, 5, 0);
-                        robot.getDriveTrain().encoderDriveFast(0.3, 73, 30);
-                        robot.getDriveTrain().encoderDrive(0.1, 3, 10);
                     } else {
                         //done!
                         telemetry.addData("Mineral Location", "Right");
-                        robot.getDriveTrain().encoderDrive(0.1, -1, 10);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, 3, 10, 0);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.1, -16, 30, 0);
-                        robot.getDriveTrain().encoderStrafeGyro(0.5, 7, 30, 0);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.5, -26, 30, 0);
-                        robot.getDriveTrain().gyroTurn(-45, 0.1);
-                        robot.getDriveTrain().encoderStrafeGyro(0.1, 3, 10, -45);
-                        robot.getDriveTrain().encoderDriveFastGyro(0.5, -22, 30, -45);
-                        robot.getDriveTrain().encoderStrafeGyro(0.3, -81, 30, -45);
                     }
                     telemetry.addData("X Position", goldMineralX);
                     telemetry.update();

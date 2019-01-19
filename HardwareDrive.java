@@ -29,7 +29,9 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -70,6 +72,8 @@ public class HardwareDrive
     public Servo hook = null;
     public Servo backHook = null;
     public Servo panelPush = null;
+    public ColorSensor sensorColor = null;
+    public DistanceSensor sensorDistance = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -99,6 +103,8 @@ public class HardwareDrive
         hook = hwMap.get(Servo.class, "hook");
         backHook = hwMap.get(Servo.class, "backHook");
         panelPush = hwMap.get(Servo.class, "panelPush");
+        sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
+        sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -268,6 +274,18 @@ public class HardwareDrive
         backLeftMotor.setPower(-var.POWER);
         backRightMotor.setPower(var.POWER);
 
+    }
+    public void left(){
+        frontLeftMotor.setPower(-var.POWER);
+        frontRightMotor.setPower(-var.POWER);
+        backLeftMotor.setPower(var.POWER);
+        backRightMotor.setPower(var.POWER);
+    }
+    public void right(){
+        frontLeftMotor.setPower(var.POWER);
+        frontRightMotor.setPower(var.POWER);
+        backLeftMotor.setPower(-var.POWER);
+        backRightMotor.setPower(-var.POWER);
     }
     public void stop(){
         frontLeftMotor.setPower(0);

@@ -29,12 +29,18 @@
 
 package org.firstinspires.ftc.teamcode;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
+import static java.lang.Double.NaN;
 
 /**
  * This file illustrates the concept of driving a path based on time.
@@ -57,9 +63,9 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Flag position to Flag", group="Blu")
-//@Disabled
-public class Auto_BluFlagPosFlag extends LinearOpMode {
+@Autonomous(name="Mineral pushing testing", group="Blu")
+@Disabled
+public class Auto_BluFlagPosPitOld extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareDrive robot = new HardwareDrive();
@@ -75,6 +81,23 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
          */
         robot.init(hardwareMap);
 
+
+
+        float hsvValues[] = {0F, 0F, 0F};
+
+        // values is a reference to the hsvValues array.
+        final float values[] = hsvValues;
+
+        // sometimes it helps to multiply the raw RGB values with a scale factor
+        // to amplify/attentuate the measured values.
+        final double SCALE_FACTOR = 255;
+        double timeValue = 8;
+
+        // get a reference to the RelativeLayout so we can change the background
+        // color of the Robot Controller app to match the hue detected by the RGB sensor.
+        int relativeLayoutId = hardwareMap.appContext.getResources().getIdentifier("RelativeLayout", "id", hardwareMap.appContext.getPackageName());
+        final View relativeLayout = ((Activity) hardwareMap.appContext).findViewById(relativeLayoutId);
+
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
@@ -82,57 +105,83 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-
-        //#########################################
-        //
-        //Lower bot off lander
-        robot.strutLowerDown();
+        Color.RGBToHSV((int) (robot.sensorColor.red() * SCALE_FACTOR),
+                (int) (robot.sensorColor.green() * SCALE_FACTOR),
+                (int) (robot.sensorColor.blue() * SCALE_FACTOR),
+                hsvValues);
+//        while(robot.sensorDistance.getDistance(DistanceUnit.CM) > 7.0 || robot.sensorDistance.getDistance(DistanceUnit.CM) == 0.0){
+//            robot.forward();
+//        }
+//        robot.stop();
+        var.POWER = 0.4;
+        robot.forward();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 2.5)) {
+        while (opModeIsActive() && (runtime.seconds() <= 1.68)) {
             telemetry.addData("Off Lander", "Lowering down legs: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
         robot.stop();
+        var.POWER = 0.8;
 
-        //Open lander hook so the robot can detach from the lander
-        robot.landerHookOpen();
+        var.POWER = 0.1;
+        robot.spinLeft();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 2.35)) {
-            telemetry.addData("Off Lander", "Opening lander latch: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.landerHookRest();
-
-        //Retract the legs
-        robot.strutLiftUp();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.7)) {
-            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && (runtime.seconds() <= 0.28)) {
+            telemetry.addData("Off Lander", "Lowering down legs: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
         robot.stop();
+        var.POWER = 0.8;
 
-        //Close hook for later
-        robot.landerHookClose();
+        var.POWER = 0.1;
+        robot.left();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.6)) {
-            telemetry.addData("Off Lander", "Closing lander latch: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.landerHookRest();
-        //Off lander
-        //
-        //
-        //#################################
-
-        robot.forward();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 0.84)) {
-            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
+        while (opModeIsActive() && robot.sensorColor.alpha() * 8 != NaN) {
+            telemetry.addData("Alpha", robot.sensorColor.alpha() * 8);
             telemetry.update();
         }
         robot.stop();
+        var.POWER = 0.8;
 
+
+        // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
+
+        //Drop arm
+
+        //block or ball
+        // or
+
+        //Drop team flag
+
+
+//        // Step 1:  Drive forward for 3 seconds
+//        robot.forward();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
+//            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//        // Step 2:  Spin right for 1.3 seconds
+//        robot.spinLeft();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() < 1.3)) {
+//            telemetry.addData("Path", "Leg 2: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+//
+//        // Step 3:  Drive Backwards for 1 Second
+//        robot.back();
+//        runtime.reset();
+//        while (opModeIsActive() && (runtime.seconds() < 1.0)) {
+//            telemetry.addData("Path", "Leg 3: %2.5f S Elapsed", runtime.seconds());
+//            telemetry.update();
+//        }
+
+        // Step 4:  Stop and close the claw.
+        robot.stop();
+
+        telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);
     }
