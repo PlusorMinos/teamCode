@@ -217,13 +217,13 @@ public class HardwareDrive
         }
 
         if (panelForward){
-            hook.setPosition(1);
+            panelPush.setPosition(1);
         }
         else if (panelBackward){
-            hook.setPosition(0);
+            panelPush.setPosition(0);
         }
         else {
-            hook.setPosition(0.5);
+            panelPush.setPosition(0.5);
         }
 
         //for drive direction
