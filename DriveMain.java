@@ -79,6 +79,8 @@ public class DriveMain extends LinearOpMode {
             double strut;
             boolean hookF;
             boolean hookB;
+            boolean panelForward;
+            boolean panelBackward;
 
             // POV Mode uses left stick to go forward, and right stick to turn.
             // - This uses basic math to combine motions and is easier to drive straight.
@@ -89,8 +91,10 @@ public class DriveMain extends LinearOpMode {
             strut        = gamepad2.right_stick_y;
             hookF = gamepad2.a;
             hookB = gamepad2.b;
+            panelForward = gamepad2.y;
+            panelBackward = gamepad2.x;
 
-            robot.drive(forwardPower, sidePower, spinPower, arm, strut, hookF, hookB);
+            robot.drive(forwardPower, sidePower, spinPower, arm, strut, hookF, hookB, panelForward, panelBackward);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
