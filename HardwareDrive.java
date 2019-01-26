@@ -73,6 +73,8 @@ public class HardwareDrive
     public Servo backHook = null;
     public Servo panelPush = null;
     public Servo flagDrop = null;
+    public Servo grabLeftServo = null;
+    public Servo grabRightServo = null;
     public ColorSensor sensorColor = null;
     public DistanceSensor sensorDistance = null;
 
@@ -105,6 +107,8 @@ public class HardwareDrive
         backHook = hwMap.get(Servo.class, "backHook");
         panelPush = hwMap.get(Servo.class, "panelPush");
         flagDrop = hwMap.get(Servo.class, "flagDrop");
+        grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
+        grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
@@ -184,7 +188,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, double strut, boolean hookF, boolean hookB, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton){
+    public void drive(double forward, double side, double spin, double arm, double strut, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -220,14 +224,19 @@ public class HardwareDrive
         if(arm < -var.ARMP)
             arm = -var.ARMP;
 
-        if (hookF){
-            hook.setPosition(1);
+        if(slideToggle == true){
+            if(Varibles.hookPosSet == true){
+                Varibles.hookPosSet = false;
+            }
+            else if(Varibles.hookPosSet == false){
+                Varibles.hookPosSet = true;
+            }
         }
-        else if (hookB){
+        if(Varibles.hookPosSet == true){
             hook.setPosition(0);
         }
-        else {
-            hook.setPosition(0.5);
+        else if(Varibles.hookPosSet == false){
+            hook.setPosition(1);
         }
 
         if (!flagDropping){
@@ -248,6 +257,15 @@ public class HardwareDrive
         }
         else {
             panelPush.setPosition(0.5);
+        }
+
+        if (grabTrigger){
+            grabLeftServo.setPosition(1);
+            grabRightServo.setPosition(0);
+        }
+        else{
+            grabLeftServo.setPosition(.5);
+            grabRightServo.setPosition(.5);
         }
 
         //for drive direction

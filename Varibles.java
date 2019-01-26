@@ -7,8 +7,9 @@ package org.firstinspires.ftc.teamcode;
 public class Varibles {
 
     public static double POWER = 0.8;
-    public static double ARMP = 0.2;
-    public static double FORWARD_SPEED = 0.6;
-    public static double TURN_SPEED    = 0.5;
+    public static final double ARMP = 0.2;
+    public static final double FORWARD_SPEED = 0.6;
+    public static final double TURN_SPEED    = 0.5;
+    public static boolean hookPosSet = true;
 
 }
