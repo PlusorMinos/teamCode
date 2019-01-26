@@ -72,6 +72,7 @@ public class HardwareDrive
     public Servo hook = null;
     public Servo backHook = null;
     public Servo panelPush = null;
+    public Servo flagDrop = null;
     public ColorSensor sensorColor = null;
     public DistanceSensor sensorDistance = null;
 
@@ -103,6 +104,7 @@ public class HardwareDrive
         hook = hwMap.get(Servo.class, "hook");
         backHook = hwMap.get(Servo.class, "backHook");
         panelPush = hwMap.get(Servo.class, "panelPush");
+        flagDrop = hwMap.get(Servo.class, "flagDrop");
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
@@ -182,13 +184,19 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, double strut, boolean hookF, boolean hookB, boolean panelForward, boolean panelBackward){
+    public void drive(double forward, double side, double spin, double arm, double strut, boolean hookF, boolean hookB, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
         double backLeftPower = forward*var.POWER +side*var.POWER + spin*var.POWER;
         double backRightPower = -forward*var.POWER +side*var.POWER + spin*var.POWER;
 
+        if(slowdownButton) {
+            Varibles.POWER = .4;
+        }
+        else{
+            Varibles.POWER = .8;
+        }
         if(frontLeftPower > 1.0)
             frontLeftPower = 1.0;
         if(frontLeftPower < -1.0)
@@ -220,6 +228,16 @@ public class HardwareDrive
         }
         else {
             hook.setPosition(0.5);
+        }
+
+        if (!flagDropping){
+            flagDrop.setPosition(1);
+        }
+        else if (!flagDropperRaise){
+            flagDrop.setPosition(0);
+        }
+        else {
+            flagDrop.setPosition(0.5);
         }
 
         if (panelForward){
@@ -318,6 +336,15 @@ public class HardwareDrive
     }
     public void backhookClose(){
         backHook.setPosition(0);
+    }
+    public void platOut(){
+        panelPush.setPosition(1);
+    }
+    public void platIn(){
+        panelPush.setPosition(0);
+    }
+    public void platStop(){
+        panelPush.setPosition(0.5);
     }
  }
 
