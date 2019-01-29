@@ -65,6 +65,7 @@ public class HardwareDrive
     public DcMotor  backRightMotor = null;
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
+    public DcMotor  armMotorMain = null;
     //public DcMotor  armString = null;
     public DcMotor  strutLeft = null;
     public DcMotor  strutRight = null;
@@ -97,11 +98,12 @@ public class HardwareDrive
         frontRightMotor = hwMap.get(DcMotor.class, "fR");
         backLeftMotor    = hwMap.get(DcMotor.class, "bL");
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
-        armLeft    = hwMap.get(DcMotor.class, "aL");
-        armRight    = hwMap.get(DcMotor.class, "aR");
+        //armLeft    = hwMap.get(DcMotor.class, "aL");
+        //armRight    = hwMap.get(DcMotor.class, "aR");
         //armString    = hwMap.get(DcMotor.class, "aS");
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
+        armMotorMain = hwMap.get(DcMotor.class, "Main_Arm_Motor");
         //midArm = hwMap.get(DcMotor.class, "mA");
         hook = hwMap.get(Servo.class, "hook");
         backHook = hwMap.get(Servo.class, "backHook");
@@ -117,11 +119,12 @@ public class HardwareDrive
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        armLeft.setPower(0);
-        armRight.setPower(0);
+        //armLeft.setPower(0);
+        //armRight.setPower(0);
         //armString.setPower(0);
         strutRight.setPower(0);
         strutLeft.setPower(0);
+        armMotorMain.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -129,11 +132,12 @@ public class HardwareDrive
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotorMain.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Define and initialize ALL installed servo
@@ -166,7 +170,7 @@ public class HardwareDrive
         if(backRightPower < -1.0)
             backRightPower = -1.0;
 
-        //for drive dircation
+        //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
@@ -188,7 +192,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, double strut, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger){
+    public void drive(double forward, double side, double spin, double arm, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -219,10 +223,18 @@ public class HardwareDrive
             backRightPower = -1.0;
 
 
-        if(arm > var.ARMP)
-            arm = var.ARMP;
-        if(arm < -var.ARMP)
-            arm = -var.ARMP;
+//        if(arm > var.ARM_POWER)
+//            arm = var.ARM_POWER;
+//        if(arm < -var.ARM_POWER)
+//            arm = -var.ARM_POWER;
+        if(strutUp){
+            strutLeft.setPower(1);
+            strutRight.setPower(1);
+        }
+        if(strutDown){
+            strutLeft.setPower(-1);
+            strutRight.setPower(-1);
+        }
 
         if(slideToggle == true){
             if(Varibles.hookPosSet == true){
@@ -239,10 +251,10 @@ public class HardwareDrive
             hook.setPosition(1);
         }
 
-        if (!flagDropping){
+        if (flagDropping == false){
             flagDrop.setPosition(1);
         }
-        else if (!flagDropperRaise){
+        else if (flagDropperRaise == false){
             flagDrop.setPosition(0);
         }
         else {
@@ -273,11 +285,10 @@ public class HardwareDrive
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
-        armLeft.setPower(arm);
-        armRight.setPower(arm);
+        armMotorMain.setPower(arm);
+        //armLeft.setPower(arm);
+        //armRight.setPower(arm);
         //armString.setPower(arm);
-        strutLeft.setPower(strut);
-        strutRight.setPower(strut);
     }
     public void spinRight(){
 
