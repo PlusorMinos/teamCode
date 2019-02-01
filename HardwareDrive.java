@@ -66,6 +66,7 @@ public class HardwareDrive
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
     public DcMotor  armMotorMain = null;
+    //public DcMotor  armMotorLowerToo = null;
     //public DcMotor  armString = null;
     public DcMotor  strutLeft = null;
     public DcMotor  strutRight = null;
@@ -76,6 +77,7 @@ public class HardwareDrive
     public Servo flagDrop = null;
     public Servo grabLeftServo = null;
     public Servo grabRightServo = null;
+    //public Servo  armMotorLower = null;
     public ColorSensor sensorColor = null;
     public DistanceSensor sensorDistance = null;
 
@@ -104,6 +106,8 @@ public class HardwareDrive
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
         armMotorMain = hwMap.get(DcMotor.class, "Main_Arm_Motor");
+        //armMotorLowerToo = hwMap.get.(DcMotor.class, "Lower_Arm_Motor");
+        //armMotorLower = hwMap.get(Servo.class, "Lower_Arm_Servo");
         //midArm = hwMap.get(DcMotor.class, "mA");
         hook = hwMap.get(Servo.class, "hook");
         backHook = hwMap.get(Servo.class, "backHook");
@@ -125,6 +129,7 @@ public class HardwareDrive
         strutRight.setPower(0);
         strutLeft.setPower(0);
         armMotorMain.setPower(0);
+        //armMotorLowerToo.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -192,7 +197,7 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown){
+    public void drive(double forward, double side, double spin, double arm, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm){
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
@@ -223,26 +228,22 @@ public class HardwareDrive
             backRightPower = -1.0;
 
 
-//        if(arm > var.ARM_POWER)
-//            arm = var.ARM_POWER;
-//        if(arm < -var.ARM_POWER)
-//            arm = -var.ARM_POWER;
+
         if(strutUp){
-            strutLeft.setPower(1);
-            strutRight.setPower(1);
-        }
-        if(strutDown){
             strutLeft.setPower(-1);
             strutRight.setPower(-1);
         }
+        else if(strutDown){
+            strutLeft.setPower(1);
+            strutRight.setPower(1);
+        }
+        else{
+            strutLeft.setPower(0);
+            strutRight.setPower(0);
+        }
 
         if(slideToggle == true){
-            if(Varibles.hookPosSet == true){
-                Varibles.hookPosSet = false;
-            }
-            else if(Varibles.hookPosSet == false){
-                Varibles.hookPosSet = true;
-            }
+            Varibles.hookPosSet = !Varibles.hookPosSet;
         }
         if(Varibles.hookPosSet == true){
             hook.setPosition(0);
@@ -286,9 +287,8 @@ public class HardwareDrive
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
         armMotorMain.setPower(arm);
-        //armLeft.setPower(arm);
-        //armRight.setPower(arm);
-        //armString.setPower(arm);
+
+        //armMotorLower.setPosition((lowerArm/2)+.5);
     }
     public void spinRight(){
 
@@ -359,12 +359,6 @@ public class HardwareDrive
     }
     public void landerHookOpen(){
         hook.setPosition(0);
-    }
-    public void backHookOpen(){
-        backHook.setPosition(.1);
-    }
-    public void backhookClose(){
-        backHook.setPosition(0);
     }
     public void platOut(){
         panelPush.setPosition(1);

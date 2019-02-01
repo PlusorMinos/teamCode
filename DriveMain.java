@@ -92,8 +92,9 @@ public class DriveMain extends LinearOpMode {
             // - This uses basic math to combine motions and is easier to drive straight.
             forwardPower = gamepad1.left_stick_y;
             sidePower    = gamepad1.left_stick_x;
-            spinPower    = -gamepad1.right_stick_x;
+            spinPower    = gamepad1.right_stick_x;
             arm          = -gamepad2.left_stick_y;
+            lowerArm     = -gamepad2.right_stick_y;
             //strut        = gamepad2.right_stick_y;
             strutUp     = gamepad1.dpad_up;
             strutDown   = gamepad1.dpad_down;
@@ -106,7 +107,7 @@ public class DriveMain extends LinearOpMode {
             grabTrigger = gamepad2.right_bumper;
 
 
-            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown);
+            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown, lowerArm);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
