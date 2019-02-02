@@ -66,7 +66,7 @@ public class HardwareDrive
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
     public DcMotor  armMotorMain = null;
-    //public DcMotor  armMotorLowerToo = null;
+    public DcMotor  armMotorLowerToo = null;
     //public DcMotor  armString = null;
     public DcMotor  strutLeft = null;
     public DcMotor  strutRight = null;
@@ -106,9 +106,7 @@ public class HardwareDrive
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
         armMotorMain = hwMap.get(DcMotor.class, "Main_Arm_Motor");
-        //armMotorLowerToo = hwMap.get.(DcMotor.class, "Lower_Arm_Motor");
-        //armMotorLower = hwMap.get(Servo.class, "Lower_Arm_Servo");
-        //midArm = hwMap.get(DcMotor.class, "mA");
+        armMotorLowerToo = hwMap.get(DcMotor.class, "Main_Arm_Motor_Too");
         hook = hwMap.get(Servo.class, "hook");
         backHook = hwMap.get(Servo.class, "backHook");
         panelPush = hwMap.get(Servo.class, "panelPush");
@@ -129,7 +127,7 @@ public class HardwareDrive
         strutRight.setPower(0);
         strutLeft.setPower(0);
         armMotorMain.setPower(0);
-        //armMotorLowerToo.setPower(0);
+        armMotorLowerToo.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -245,6 +243,7 @@ public class HardwareDrive
         if(slideToggle == true){
             Varibles.hookPosSet = !Varibles.hookPosSet;
         }
+
         if(Varibles.hookPosSet == true){
             hook.setPosition(0);
         }
@@ -287,6 +286,7 @@ public class HardwareDrive
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
         armMotorMain.setPower(arm);
+        armMotorLowerToo.setPower(-arm);
 
         //armMotorLower.setPosition((lowerArm/2)+.5);
     }
