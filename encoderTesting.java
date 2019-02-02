@@ -79,26 +79,14 @@ public class encoderTesting extends LinearOpMode {
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
-        robot.strutLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.strutRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-
-        robot.strutLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.strutRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        robot.strutRight.setTargetPosition(385);
-        robot.strutLeft.setTargetPosition(385);
-        robot.strutRight.setPower(1);
-        robot.strutLeft.setPower(1);
-        while(robot.strutLeft.isBusy()&&robot.strutRight.isBusy()&&opModeIsActive()){
+        robot.encoderYDrive(365);
+        robot.encoderXDrive(365);
+        robot.encoderDiagLeft(365);
+        robot.encoderDiagRight(365);
 
-        }
-        robot.strutRight.setPower(0);
-        robot.strutLeft.setPower(0);
         telemetry.addData("Status", "Ready to run");    //
         telemetry.update();
     }

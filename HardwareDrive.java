@@ -369,6 +369,153 @@ public class HardwareDrive
     public void platStop(){
         panelPush.setPosition(0.5);
     }
+    public void encoderYDrive(int tick){
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setTargetPosition(-tick);
+        frontRightMotor.setTargetPosition(tick);
+        backLeftMotor.setTargetPosition(-tick);
+        backRightMotor.setTargetPosition(tick);
+
+        frontLeftMotor.setPower(1);
+        frontRightMotor.setPower(1);
+        backLeftMotor.setPower(1);
+        backRightMotor.setPower(1);
+        while(frontLeftMotor.isBusy()&&frontRightMotor.isBusy()&&backLeftMotor.isBusy()&&backRightMotor.isBusy()){
+
+        }
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+    }
+    public void encoderXDrive(int tick){
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setTargetPosition(tick);
+        frontRightMotor.setTargetPosition(tick);
+        backLeftMotor.setTargetPosition(-tick);
+        backRightMotor.setTargetPosition(-tick);
+
+        frontLeftMotor.setPower(1);
+        frontRightMotor.setPower(1);
+        backLeftMotor.setPower(1);
+        backRightMotor.setPower(1);
+        while(frontLeftMotor.isBusy()&&frontRightMotor.isBusy()&&backLeftMotor.isBusy()&&backRightMotor.isBusy()){
+
+        }
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+    }
+    public void encoderStrut(int tick){
+        strutRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        strutLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        strutRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        strutLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        strutRight.setTargetPosition(tick);
+        strutLeft.setTargetPosition(tick);
+
+        strutRight.setPower(1);
+        strutLeft.setPower(1);
+
+        while(strutRight.isBusy()&&strutRight.isBusy()){
+
+        }
+
+        strutRight.setPower(0);
+        strutLeft.setPower(0);
+    }
+    public void encoderDiagRight(int tick){
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setTargetPosition(tick);
+        backRightMotor.setTargetPosition(tick);
+
+        frontLeftMotor.setPower(1);
+        backRightMotor.setPower(1);
+
+        while(frontLeftMotor.isBusy()&&backRightMotor.isBusy()){
+
+        }
+
+        frontLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+    }
+    public void encoderDiagLeft(int tick){
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontRightMotor.setTargetPosition(tick);
+        backLeftMotor.setTargetPosition(tick);
+
+        frontRightMotor.setPower(1);
+        backLeftMotor.setPower(1);
+
+        while(frontRightMotor.isBusy()&&backLeftMotor.isBusy()){
+
+        }
+
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+    }
+    public void encoderSpin(int tick) {
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        frontLeftMotor.setTargetPosition(tick);
+        frontRightMotor.setTargetPosition(tick);
+        backLeftMotor.setTargetPosition(tick);
+        backRightMotor.setTargetPosition(tick);
+
+        frontLeftMotor.setPower(1);
+        frontRightMotor.setPower(1);
+        backLeftMotor.setPower(1);
+        backRightMotor.setPower(1);
+        while (frontLeftMotor.isBusy() && frontRightMotor.isBusy() && backLeftMotor.isBusy() && backRightMotor.isBusy()) {
+
+        }
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+    }
  }
 
  

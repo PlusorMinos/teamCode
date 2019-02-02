@@ -82,94 +82,19 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
-
-        robot.strutLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.strutRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //#########################################
-        //
-        //Lower bot off lander
-        robot.platOut();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.1)) {
-            telemetry.addData("Off Lander", "Lowering down legs: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.platStop();
-
-        robot.strutLowerDown();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 2.5)) {
-            telemetry.addData("Off Lander", "Lowering down legs: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.stop();
-
-        //Open lander hook so the robot can detach from the lander
-        robot.landerHookOpen();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.8)) {
-            telemetry.addData("Off Lander", "Opening lander latch: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.landerHookRest();
-
-        //Retract the legs
-        robot.strutLiftUp();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 2.2)) {
-            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.stop();
-
         robot.platIn();
         runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 0.9)) {
-            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
+        while (opModeIsActive() && runtime.seconds() <= 2.4){
+
         }
         robot.platStop();
 
-        //Close hook for later
-        robot.landerHookClose();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 1.6)) {
-            telemetry.addData("Off Lander", "Closing lander latch: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.landerHookRest();
-        //Off lander
-        //
-        //
-        //#################################
-
-        robot.forward();
-        runtime.reset();
-        while (opModeIsActive() && (runtime.seconds() <= 0.42)) {
-            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
-            telemetry.update();
-        }
-        robot.stop();
-
-//        robot.left();
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() <= 0.84)) {
-//            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
-//        robot.stop();
-//
-//        robot.forward();
-//        runtime.reset();
-//        while (opModeIsActive() && (runtime.seconds() <= 0.42)) {
-//            telemetry.addData("Off Lander", "Lowering robot to ground: %2.5f S Elapsed", runtime.seconds());
-//            telemetry.update();
-//        }
-//        robot.stop();
-
-
-        telemetry.update();
-        sleep(1000);
+        robot.encoderStrut(-1740);
+        robot.hook.setPosition(0);
+        robot.encoderStrut(1840 );
+        robot.hook.setPosition(1);
+        robot.encoderYDrive(-365);
+        robot.encoderXDrive(365);
+        robot.encoderSpin(182);
     }
 }
