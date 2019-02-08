@@ -89,12 +89,21 @@ public class Auto_BluFlagPosFlag extends LinearOpMode {
         }
         robot.platStop();
 
-        robot.encoderStrut(-1740);
-        robot.hook.setPosition(0);
-        robot.encoderStrut(1840 );
+        robot.encoderStrut(-1840, false, 0);
         robot.hook.setPosition(1);
-        robot.encoderYDrive(-365);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() <= 3){
+
+        }
+        robot.encoderStrut(2040, true, 3);
+        robot.hook.setPosition(0);
+        runtime.reset();
+        while (opModeIsActive() && runtime.seconds() <= 3){
+
+        }
+        robot.encoderYDrive(-265);
         robot.encoderXDrive(365);
-        robot.encoderSpin(182);
+        robot.encoderSpin(-365);
+        robot.encoderXDrive(365);
     }
 }

@@ -78,7 +78,9 @@ public class DriveMain extends LinearOpMode {
             double arm;
             double lowerArm;
             double strut;
-            boolean slideToggle;
+            double slideToggle;
+            boolean armLockForward;
+            boolean armLockBackward;
             boolean panelForward;
             boolean panelBackward;
             boolean flagDroppping;
@@ -98,20 +100,23 @@ public class DriveMain extends LinearOpMode {
             //strut        = gamepad2.right_stick_y;
             strutUp     = gamepad1.dpad_up;
             strutDown   = gamepad1.dpad_down;
-            slideToggle = gamepad2.a;
+            slideToggle = gamepad2.right_trigger;
             panelForward = gamepad2.y;
             panelBackward = gamepad2.x;
             flagDroppping = gamepad1.dpad_down;
             flagDroppeRaise = gamepad1.dpad_up;
             slowdownTrigger = gamepad1.right_bumper;
             grabTrigger = gamepad2.right_bumper;
+            armLockForward = gamepad2.dpad_up;
+            armLockBackward = gamepad2.dpad_down;
 
 
-            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown, lowerArm);
+            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown, lowerArm, armLockForward, armLockBackward);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)");
+            telemetry.addData("Status", "slideToggle"+slideToggle);
             telemetry.update();
         }
     }

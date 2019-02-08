@@ -55,7 +55,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class HardwareDrive
 
 {
-
+    private ElapsedTime     runtime = new ElapsedTime();
     Varibles var = new Varibles();
 
     /* Public OpMode members. */
@@ -65,18 +65,18 @@ public class HardwareDrive
     public DcMotor  backRightMotor = null;
     public DcMotor  armLeft = null;
     public DcMotor  armRight = null;
-    public DcMotor  armMotorMain = null;
-    public DcMotor  armMotorLowerToo = null;
+    //public DcMotor  armMotorMain = null;
+    //public DcMotor  armMotorLowerToo = null;
     //public DcMotor  armString = null;
     public DcMotor  strutLeft = null;
     public DcMotor  strutRight = null;
     public DcMotor midArm = null;
     public Servo hook = null;
-    public Servo backHook = null;
     public Servo panelPush = null;
     public Servo flagDrop = null;
-    public Servo grabLeftServo = null;
-    public Servo grabRightServo = null;
+    //public Servo grabLeftServo = null;
+    //public Servo grabRightServo = null;
+    //public Servo lockingServo = null;
     //public Servo  armMotorLower = null;
     public ColorSensor sensorColor = null;
     public DistanceSensor sensorDistance = null;
@@ -105,14 +105,14 @@ public class HardwareDrive
         //armString    = hwMap.get(DcMotor.class, "aS");
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
-        armMotorMain = hwMap.get(DcMotor.class, "Main_Arm_Motor");
-        armMotorLowerToo = hwMap.get(DcMotor.class, "Main_Arm_Motor_Too");
+      //  armMotorMain = hwMap.get(DcMotor.class, "Main_Arm_Motor");
+        //armMotorLowerToo = hwMap.get(DcMotor.class, "Main_Arm_Motor_Too");
         hook = hwMap.get(Servo.class, "hook");
-        backHook = hwMap.get(Servo.class, "backHook");
         panelPush = hwMap.get(Servo.class, "panelPush");
         flagDrop = hwMap.get(Servo.class, "flagDrop");
-        grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
-        grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
+        //grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
+        //grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
+      //  lockingServo = hwMap.get(Servo.class, "lockingServo");
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
 
@@ -126,8 +126,8 @@ public class HardwareDrive
         //armString.setPower(0);
         strutRight.setPower(0);
         strutLeft.setPower(0);
-        armMotorMain.setPower(0);
-        armMotorLowerToo.setPower(0);
+        //armMotorMain.setPower(0);
+        //armMotorLowerToo.setPower(0);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -140,7 +140,7 @@ public class HardwareDrive
         //armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        armMotorMain.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //armMotorMain.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
 
         // Define and initialize ALL installed servo
@@ -195,13 +195,19 @@ public class HardwareDrive
             smite.setPosition(1.1);
         }
     }*/
-    public void drive(double forward, double side, double spin, double arm, boolean slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm){
+    public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward){
+
+
 
         double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
         double backLeftPower = forward*var.POWER +side*var.POWER + spin*var.POWER;
         double backRightPower = -forward*var.POWER +side*var.POWER + spin*var.POWER;
-
+        // -1,1,-1,1 for forward
+        // 1,0,0,-1 for forward-right
+        // 1,1,-1,-1 for right
+        //  1,-1,-1,1 for back
+        // -1,-1,1,1 for left
         if(slowdownButton) {
             Varibles.POWER = .4;
         }
@@ -226,7 +232,15 @@ public class HardwareDrive
             backRightPower = -1.0;
 
 
-
+        if(armLockForward == true){
+        //    lockingServo.setPosition(1);
+        }
+        else if(armLockBackward == true){
+        //    lockingServo.setPosition(0);
+        }
+        else{
+        //    lockingServo.setPosition(.5);
+        }
         if(strutUp){
             strutLeft.setPower(-1);
             strutRight.setPower(-1);
@@ -240,16 +254,7 @@ public class HardwareDrive
             strutRight.setPower(0);
         }
 
-        if(slideToggle == true){
-            Varibles.hookPosSet = !Varibles.hookPosSet;
-        }
 
-        if(Varibles.hookPosSet == true){
-            hook.setPosition(0);
-        }
-        else if(Varibles.hookPosSet == false){
-            hook.setPosition(1);
-        }
 
         if (flagDropping == false){
             flagDrop.setPosition(1);
@@ -271,22 +276,23 @@ public class HardwareDrive
             panelPush.setPosition(0.5);
         }
 
-        if (grabTrigger){
-            grabLeftServo.setPosition(1);
-            grabRightServo.setPosition(0);
-        }
-        else{
-            grabLeftServo.setPosition(.5);
-            grabRightServo.setPosition(.5);
-        }
+//        if (grabTrigger){
+//            grabLeftServo.setPosition(1);
+//            grabRightServo.setPosition(0);
+//        }
+//        else{
+//            grabLeftServo.setPosition(.5);
+//            grabRightServo.setPosition(.5);
+//        }
 
         //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
-        armMotorMain.setPower(arm);
-        armMotorLowerToo.setPower(-arm);
+        //armMotorMain.setPower(arm);
+        //armMotorLowerToo.setPower(-arm);
+        hook.setPosition(slideToggle);
 
         //armMotorLower.setPosition((lowerArm/2)+.5);
     }
@@ -385,7 +391,11 @@ public class HardwareDrive
         frontRightMotor.setTargetPosition(tick);
         backLeftMotor.setTargetPosition(-tick);
         backRightMotor.setTargetPosition(tick);
-
+        // -1,1,-1,1 for forward
+        // 1,0,0,-1 for forward-right
+        // 1,1,-1,-1 for right
+        //  1,-1,-1,1 for back
+        // -1,-1,1,1 for left
         frontLeftMotor.setPower(1);
         frontRightMotor.setPower(1);
         backLeftMotor.setPower(1);
@@ -427,7 +437,7 @@ public class HardwareDrive
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
     }
-    public void encoderStrut(int tick){
+    public void encoderStrut(int tick, boolean useTimer, double Time){
         strutRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         strutLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -439,11 +449,17 @@ public class HardwareDrive
 
         strutRight.setPower(1);
         strutLeft.setPower(1);
+        if(useTimer == true) {
+            runtime.reset();
+            while (strutRight.isBusy() || strutRight.isBusy() || runtime.seconds() <= Time) {
 
-        while(strutRight.isBusy()&&strutRight.isBusy()){
-
+            }
         }
+        else{
+            while (strutRight.isBusy() && strutRight.isBusy()) {
 
+            }
+        }
         strutRight.setPower(0);
         strutLeft.setPower(0);
     }
@@ -455,7 +471,7 @@ public class HardwareDrive
         backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         frontLeftMotor.setTargetPosition(tick);
-        backRightMotor.setTargetPosition(tick);
+        backRightMotor.setTargetPosition(-tick);
 
         frontLeftMotor.setPower(1);
         backRightMotor.setPower(1);
@@ -475,7 +491,7 @@ public class HardwareDrive
         backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         frontRightMotor.setTargetPosition(tick);
-        backLeftMotor.setTargetPosition(tick);
+        backLeftMotor.setTargetPosition(-tick);
 
         frontRightMotor.setPower(1);
         backLeftMotor.setPower(1);
