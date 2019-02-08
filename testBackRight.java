@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //Built using Team 11654 (Plus or Minos)'s quick autonomous creator
-@Autonomous(name="testBackRight", group="khronosTesting");
+@Autonomous(name="testBackRight", group="test")
 //@Disabled
 public class testBackRight extends LinearOpMode {
 
@@ -82,9 +82,9 @@ public class testBackRight extends LinearOpMode {
                                
 
              robot.encoderDrive(0,0);
-             robot.encoderDrive(47,48);
+             robot.encoderDrive(46,41);
    
         }
     }
-//184, 163 Angle: 0
-//220, 196 Angle: 0
+//183, 176 Angle: 0
+//213, 204 Angle: 0
