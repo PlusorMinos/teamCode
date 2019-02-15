@@ -81,10 +81,10 @@ public class RedDepotTest extends LinearOpMode {
             //begin generated code
                                
 
-             robot.encoderDrive(-315,1710);
-             robot.encoderDrive(-404,1710);
+             robot.encoderDrive(129,840);
+             robot.encoderDrive(46,700);
    
         }
     }
-//54, 225 Angle: 225
-//52, 54 Angle: 225
+//141, 216 Angle: 225
+//140, 146 Angle: 225
