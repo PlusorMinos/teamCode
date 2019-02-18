@@ -82,7 +82,7 @@ public class testBackRight extends LinearOpMode {
                                
 
              robot.encoderDrive(0,0);
-             robot.encoderDrive(46,41);
+             robot.encoderDrive(46,410);
    
         }
     }

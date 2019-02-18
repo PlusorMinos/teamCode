@@ -35,6 +35,7 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import java.lang.Math;
 
 /**
  * This is NOT an opmode.
@@ -526,6 +527,75 @@ public class HardwareDrive
         backRightMotor.setPower(1);
         while (frontLeftMotor.isBusy() && frontRightMotor.isBusy() && backLeftMotor.isBusy() && backRightMotor.isBusy()) {
 
+        }
+        frontLeftMotor.setPower(0);
+        frontRightMotor.setPower(0);
+        backLeftMotor.setPower(0);
+        backRightMotor.setPower(0);
+    }
+    public void encoderDrive(int angle,int tick){
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(angle < 0){
+            angle = angle + 360;
+        }
+        double y = Math.sin(Math.toRadians(angle));
+        double x = Math.cos(Math.toRadians(angle));
+        double frontLeft = (y*var.POWER)-(x*var.POWER);
+        double frontRight = -(y*var.POWER)-(x*var.POWER);
+        double backLeft = (y*var.POWER)+(x*var.POWER);
+        double backRight = -(y*var.POWER)+(x*var.POWER);
+        if(frontLeft > 1.0)
+            frontLeft = 1.0;
+        if(frontLeft < -1.0)
+            frontLeft = -1.0;
+        if(frontRight > 1.0)
+            frontRight = 1.0;
+        if(frontRight < -1.0)
+            frontRight = -1.0;
+        if(backLeft > 1.0)
+            backLeft = 1.0;
+        if(backLeft < -1.0)
+            backLeft = -1.0;
+        if(backRight > 1.0)
+            backRight = 1.0;
+        if(backRight < -1.0)
+            backRight = -1.0;
+        double tickDoub = (double) tick;
+        frontLeft = (frontLeft*tickDoub);
+        frontRight = (frontRight*tickDoub);
+        backLeft = (backLeft*tickDoub);
+        backRight = (backRight*tickDoub);
+        int frontLeftPos = (int) frontLeft;
+        int frontRightPos = (int) frontRight;
+        int backLeftPos = (int) backLeft;
+        int backRightPos = (int) backRight;
+
+
+        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontLeftMotor.setTargetPosition(frontLeftPos);
+        frontRightMotor.setTargetPosition(frontRightPos);
+        backLeftMotor.setTargetPosition(backLeftPos);
+        backRightMotor.setTargetPosition(backRightPos);
+        frontLeftMotor.setPower(var.POWER);
+        frontRightMotor.setPower(var.POWER);
+        backLeftMotor.setPower(var.POWER);
+        backRightMotor.setPower(var.POWER);
+        while(frontLeftMotor.isBusy() || frontRightMotor.isBusy() || backLeftMotor.isBusy() || backRightMotor.isBusy()){
         }
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);

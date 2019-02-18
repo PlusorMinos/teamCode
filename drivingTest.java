@@ -59,32 +59,39 @@ public class drivingTest extends LinearOpMode {
 
             // Wait for the game to start (driver presses PLAY)
             waitForStart();
-            robot.platIn();
-            runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 2.4){
-
-            }
-            robot.platStop();
-
-            robot.encoderStrut(-1840, false, 0);
-            robot.hook.setPosition(1);
-            runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 3){
-
-            }
-            robot.encoderStrut(2040, true, 3);
-            robot.hook.setPosition(0);
-            runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 3){
-
-            }
+//            robot.platIn();
+//            runtime.reset();
+//            while (opModeIsActive() && runtime.seconds() <= 2.4){
+//
+//            }
+//            robot.platStop();
+//
+//            robot.encoderStrut(-1840, false, 0);
+//            robot.hook.setPosition(1);
+//            runtime.reset();
+//            while (opModeIsActive() && runtime.seconds() <= 3){
+//
+//            }
+//            robot.encoderStrut(2040, true, 3);
+//            robot.hook.setPosition(0);
+//            runtime.reset();
+//            while (opModeIsActive() && runtime.seconds() <= 3){
+//
+//            }
             //begin generated code
-                               
+            telemetry.addData("Status", "Towards bbo");
+            telemetry.update();
 
              robot.encoderDrive(0,0);
+            telemetry.addData("Status", "Towards Crater");
+            telemetry.update();
              robot.encoderDrive(-39,450);
              robot.encoderDrive(39,1440);
+            telemetry.addData("Status", "Towards Wall");
+            telemetry.update();
              robot.encoderDrive(88,1760);
+            telemetry.addData("Status", "Towards Depot");
+            telemetry.update();
    
         }
     }
