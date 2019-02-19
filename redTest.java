@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //Built using Team 11654 (Plus or Minos)'s quick autonomous creator
-@Autonomous(name="redTest", group="redTest")
+@Autonomous(name="redTest", group="test")
 //@Disabled
 public class redTest extends LinearOpMode {
 
@@ -81,8 +81,8 @@ public class redTest extends LinearOpMode {
             //begin generated code
                                
 
-             robot.encoderDrive(404,879);
-             robot.encoderDrive(224,817);
+             robot.encoderDrive(313,789);
+             robot.encoderDrive(221,756);
    
         }
     }
