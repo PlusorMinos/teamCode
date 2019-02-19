@@ -66,16 +66,16 @@ public class redTest extends LinearOpMode {
             }
             robot.platStop();
 
-            robot.encoderStrut(-1840, false, 0);
+            robot.encoderStrut(-1940, false, 0);
             robot.hook.setPosition(1);
             runtime.reset();
             while (opModeIsActive() && runtime.seconds() <= 3){
 
             }
-            robot.encoderStrut(2040, true, 3);
+            robot.encoderStrut(2040, true, 4);
             robot.hook.setPosition(0);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 3){
+            while (opModeIsActive() && runtime.seconds() <= 4){
 
             }
             //begin generated code

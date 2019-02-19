@@ -336,7 +336,7 @@ public class HardwareDrive
         strutLeft.setPower(1);
         if(useTimer == true) {
             runtime.reset();
-            while (strutRight.isBusy() || strutRight.isBusy() || runtime.seconds() <= Time) {
+            while ((strutRight.isBusy() && runtime.seconds() <= Time) || (strutRight.isBusy() && runtime.seconds() <= Time)) {
 
             }
         }
