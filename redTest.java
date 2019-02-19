@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
 //Built using Team 11654 (Plus or Minos)'s quick autonomous creator
-@Autonomous(name="redTest", group="Test")
+@Autonomous(name="redTest", group="redTest")
 //@Disabled
 public class redTest extends LinearOpMode {
 
@@ -66,23 +66,23 @@ public class redTest extends LinearOpMode {
             }
             robot.platStop();
 
-            robot.encoderStrut(-1840, false, 0);
+            robot.encoderStrut(-1940, false, 0);
             robot.hook.setPosition(1);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 3){
+            while (opModeIsActive() && runtime.seconds() <= 4){
 
             }
             robot.encoderStrut(2040, true, 3);
             robot.hook.setPosition(0);
             runtime.reset();
-            while (opModeIsActive() && runtime.seconds() <= 3){
+            while (opModeIsActive() && runtime.seconds() <= 4){
 
             }
             //begin generated code
                                
 
-             robot.encoderDrive(311,674);
-             robot.encoderDrive(225,678);
+             robot.encoderDrive(404,879);
+             robot.encoderDrive(224,817);
    
         }
     }
