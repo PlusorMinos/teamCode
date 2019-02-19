@@ -150,52 +150,6 @@ public class HardwareDrive
         grabR = hwMap.get(Servo.class, "gR");*/
 
     }
-    /*public void drive(double forward, double side, double spin, double up, boolean grab){
-
-        double frontLeftPower = forward*var.POWER -side*var.POWER + spin*var.POWER;
-        double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
-        double backLeftPower = forward*var.POWER +side*var.POWER + spin*var.POWER;
-        double backRightPower = -forward*var.POWER +side*var.POWER + spin*var.POWER;
-
-        if(frontLeftPower > 1.0)
-            frontLeftPower = 1.0;
-        if(frontLeftPower < -1.0)
-            frontLeftPower = -1.0;
-        if(frontRightPower > 1.0)
-            frontRightPower = 1.0;
-        if(frontRightPower < -1.0)
-            frontRightPower = -1.0;
-        if(backLeftPower > 1.0)
-            backLeftPower = 1.0;
-        if(backLeftPower < -1.0)
-            backLeftPower = -1.0;
-        if(backRightPower > 1.0)
-            backRightPower = 1.0;
-        if(backRightPower < -1.0)
-            backRightPower = -1.0;
-
-        //for drive direction
-        frontLeftMotor.setPower(frontLeftPower);
-        frontRightMotor.setPower(frontRightPower);
-        backLeftMotor.setPower(backLeftPower);
-        backRightMotor.setPower(backRightPower);
-
-        //lift
-        lift.setPower(up);
-
-        //hand open or close
-        if(grab == true){
-            grabL.setPosition(-.2);
-            grabR.setPosition(.35);
-            smite.setPosition(1.1);
-
-        }
-        if(grab == false){
-            grabL.setPosition(.2);
-            grabR.setPosition(0);
-            smite.setPosition(1.1);
-        }
-    }*/
     public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward){
 
 
@@ -277,14 +231,6 @@ public class HardwareDrive
             panelPush.setPosition(0.5);
         }
 
-//        if (grabTrigger){
-//            grabLeftServo.setPosition(1);
-//            grabRightServo.setPosition(0);
-//        }
-//        else{
-//            grabLeftServo.setPosition(.5);
-//            grabRightServo.setPosition(.5);
-//        }
 
         //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
@@ -376,68 +322,6 @@ public class HardwareDrive
     public void platStop(){
         panelPush.setPosition(0.5);
     }
-    public void encoderYDrive(int tick){
-
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontLeftMotor.setTargetPosition(-tick);
-        frontRightMotor.setTargetPosition(tick);
-        backLeftMotor.setTargetPosition(-tick);
-        backRightMotor.setTargetPosition(tick);
-        // -1,1,-1,1 for forward
-        // 1,0,0,-1 for forward-right
-        // 1,1,-1,-1 for right
-        //  1,-1,-1,1 for back
-        // -1,-1,1,1 for left
-        frontLeftMotor.setPower(1);
-        frontRightMotor.setPower(1);
-        backLeftMotor.setPower(1);
-        backRightMotor.setPower(1);
-        while(frontLeftMotor.isBusy()&&frontRightMotor.isBusy()&&backLeftMotor.isBusy()&&backRightMotor.isBusy()){
-
-        }
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-    }
-    public void encoderXDrive(int tick){
-
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontLeftMotor.setTargetPosition(tick);
-        frontRightMotor.setTargetPosition(tick);
-        backLeftMotor.setTargetPosition(-tick);
-        backRightMotor.setTargetPosition(-tick);
-
-        frontLeftMotor.setPower(1);
-        frontRightMotor.setPower(1);
-        backLeftMotor.setPower(1);
-        backRightMotor.setPower(1);
-        while(frontLeftMotor.isBusy()&&frontRightMotor.isBusy()&&backLeftMotor.isBusy()&&backRightMotor.isBusy()){
-
-        }
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-    }
     public void encoderStrut(int tick, boolean useTimer, double Time){
         strutRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         strutLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -463,46 +347,6 @@ public class HardwareDrive
         }
         strutRight.setPower(0);
         strutLeft.setPower(0);
-    }
-    public void encoderDiagRight(int tick){
-        frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontLeftMotor.setTargetPosition(tick);
-        backRightMotor.setTargetPosition(-tick);
-
-        frontLeftMotor.setPower(1);
-        backRightMotor.setPower(1);
-
-        while(frontLeftMotor.isBusy()&&backRightMotor.isBusy()){
-
-        }
-
-        frontLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-    }
-    public void encoderDiagLeft(int tick){
-        frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        frontRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontRightMotor.setTargetPosition(tick);
-        backLeftMotor.setTargetPosition(-tick);
-
-        frontRightMotor.setPower(1);
-        backLeftMotor.setPower(1);
-
-        while(frontRightMotor.isBusy()&&backLeftMotor.isBusy()){
-
-        }
-
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
     }
     public void encoderSpin(int tick) {
 
