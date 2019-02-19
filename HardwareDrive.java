@@ -546,12 +546,12 @@ public class HardwareDrive
         if(angle < 0){
             angle = angle + 360;
         }
-        double y = Math.sin(Math.toRadians(angle));
-        double x = Math.cos(Math.toRadians(angle));
-        double frontLeft = (y*var.POWER)-(x*var.POWER);
-        double frontRight = -(y*var.POWER)-(x*var.POWER);
-        double backLeft = (y*var.POWER)+(x*var.POWER);
-        double backRight = -(y*var.POWER)+(x*var.POWER);
+        double y = Math.sin(Math.toRadians(angle));//0d 0, 45d +, 90d 1, 135d +, 180d 0, 225d -, 270d -1, 315d -
+        double x = Math.cos(Math.toRadians(angle));//0d 1, 45d +, 90d 0, 135d -, 180d -1, 225d -, 270d 0, 315d +
+        double frontLeft = -(y*var.POWER)-(x*var.POWER);
+        double frontRight = (y*var.POWER)-(x*var.POWER);
+        double backLeft = -(y*var.POWER)+(x*var.POWER);
+        double backRight = (y*var.POWER)+(x*var.POWER);
         if(frontLeft > 1.0)
             frontLeft = 1.0;
         if(frontLeft < -1.0)
