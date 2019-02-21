@@ -63,7 +63,7 @@ public class DriveMain extends LinearOpMode {
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
-
+        var.armPosition = 0;
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
         runtime.reset();
@@ -79,6 +79,8 @@ public class DriveMain extends LinearOpMode {
             double lowerArm;
             double strut;
             double slideToggle;
+            boolean stopMoveDown;
+            double armGrabberControl;
             boolean armLockForward;
             boolean armLockBackward;
             boolean panelForward;
@@ -97,27 +99,33 @@ public class DriveMain extends LinearOpMode {
             spinPower    = gamepad1.right_stick_x;
             arm          = -gamepad2.left_stick_y;
             lowerArm     = -gamepad2.right_stick_y;
-            //strut        = gamepad2.right_stick_y;
+            slowdownTrigger = gamepad1.right_bumper;
+            //strut
             strutUp     = gamepad1.dpad_up;
             strutDown   = gamepad1.dpad_down;
-            slideToggle = gamepad2.right_trigger;
+            slideToggle = gamepad1.right_trigger;
+            stopMoveDown = gamepad1.left_bumper;
+            //panel
             panelForward = gamepad2.y;
             panelBackward = gamepad2.x;
+            //flag
             flagDroppping = gamepad1.dpad_down;
             flagDroppeRaise = gamepad1.dpad_up;
-            slowdownTrigger = gamepad1.right_bumper;
+            //arm
             grabTrigger = gamepad2.right_bumper;
             armLockForward = gamepad2.dpad_up;
             armLockBackward = gamepad2.dpad_down;
+            armGrabberControl = gamepad2.right_trigger;
+            arm = gamepad2.right_stick_y;
 
 
-            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown, lowerArm, armLockForward, armLockBackward);
+            robot.drive(forwardPower, sidePower, spinPower, arm, slideToggle, panelForward, panelBackward, flagDroppping, flagDroppeRaise, slowdownTrigger, grabTrigger, strutUp, strutDown, lowerArm, armLockForward, armLockBackward, armGrabberControl, stopMoveDown);
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Motors", "left (%.2f), right (%.2f)");
             telemetry.addData("Status", "slideToggle"+slideToggle);
-            telemetry.update();
+            telemetry.addData("Arm Motor Position", "Position: "+var.armPosition);
         }
     }
 }

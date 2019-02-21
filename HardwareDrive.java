@@ -75,8 +75,8 @@ public class HardwareDrive
     public Servo hook = null;
     public Servo panelPush = null;
     public Servo flagDrop = null;
-    //public Servo grabLeftServo = null;
-    //public Servo grabRightServo = null;
+    public Servo grabLeftServo = null;
+    public Servo grabRightServo = null;
     //public Servo lockingServo = null;
     //public Servo  armMotorLower = null;
     public ColorSensor sensorColor = null;
@@ -101,8 +101,8 @@ public class HardwareDrive
         frontRightMotor = hwMap.get(DcMotor.class, "fR");
         backLeftMotor    = hwMap.get(DcMotor.class, "bL");
         backRightMotor    = hwMap.get(DcMotor.class, "bR");
-        //armLeft    = hwMap.get(DcMotor.class, "aL");
-        //armRight    = hwMap.get(DcMotor.class, "aR");
+        armLeft    = hwMap.get(DcMotor.class, "aL");
+        armRight    = hwMap.get(DcMotor.class, "aR");
         //armString    = hwMap.get(DcMotor.class, "aS");
         strutLeft = hwMap.get(DcMotor.class, "sL");
         strutRight = hwMap.get(DcMotor.class, "sR");
@@ -111,8 +111,8 @@ public class HardwareDrive
         hook = hwMap.get(Servo.class, "hook");
         panelPush = hwMap.get(Servo.class, "panelPush");
         flagDrop = hwMap.get(Servo.class, "flagDrop");
-        //grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
-        //grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
+        grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
+        grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
       //  lockingServo = hwMap.get(Servo.class, "lockingServo");
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
@@ -122,13 +122,16 @@ public class HardwareDrive
         frontRightMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
-        //armLeft.setPower(0);
-        //armRight.setPower(0);
+        armLeft.setPower(0);
+        armRight.setPower(0);
         //armString.setPower(0);
         strutRight.setPower(0);
         strutLeft.setPower(0);
         //armMotorMain.setPower(0);
         //armMotorLowerToo.setPower(0);
+
+        armLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
@@ -136,12 +139,15 @@ public class HardwareDrive
         frontRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //armLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //armRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        armRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //armString.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutLeft.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         strutRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         //armMotorMain.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        armLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
 
         // Define and initialize ALL installed servo
@@ -150,7 +156,7 @@ public class HardwareDrive
         grabR = hwMap.get(Servo.class, "gR");*/
 
     }
-    public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward){
+    public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward, double armGrabberControl, boolean stopMoveDown){
 
 
 
@@ -158,6 +164,7 @@ public class HardwareDrive
         double frontRightPower = -forward*var.POWER -side*var.POWER + spin*var.POWER;
         double backLeftPower = forward*var.POWER +side*var.POWER + spin*var.POWER;
         double backRightPower = -forward*var.POWER +side*var.POWER + spin*var.POWER;
+        double armLeftPosition = (double) armLeft.getCurrentPosition();
         // -1,1,-1,1 for forward
         // 1,0,0,-1 for forward-right
         // 1,1,-1,-1 for right
@@ -204,12 +211,14 @@ public class HardwareDrive
             strutLeft.setPower(1);
             strutRight.setPower(1);
         }
+        else if(stopMoveDown){
+            strutLeft.setPower(-0.1);
+            strutRight.setPower(-0.1);
+        }
         else{
             strutLeft.setPower(0);
             strutRight.setPower(0);
         }
-
-
 
         if (flagDropping == false){
             flagDrop.setPosition(1);
@@ -230,13 +239,19 @@ public class HardwareDrive
         else {
             panelPush.setPosition(0.5);
         }
-
+        grabLeftServo.setPosition(armGrabberControl+.1);
+        grabRightServo.setPosition(Math.abs(1-armGrabberControl)+.1);
 
         //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
+        var.armPosition += (int) arm;
+        armLeft.setTargetPosition(-var.armPosition);
+        armRight.setTargetPosition(var.armPosition);
+        armLeft.setPower((-arm)*((Math.abs(armLeftPosition)/435.0)+.1));
+        armRight.setPower((arm)*((Math.abs(armLeftPosition)/435.0)+.1));
         //armMotorMain.setPower(arm);
         //armMotorLowerToo.setPower(-arm);
         hook.setPosition(slideToggle);
