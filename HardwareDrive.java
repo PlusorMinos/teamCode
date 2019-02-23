@@ -31,7 +31,10 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -77,10 +80,12 @@ public class HardwareDrive
     public Servo flagDrop = null;
     public Servo grabLeftServo = null;
     public Servo grabRightServo = null;
-    //public Servo lockingServo = null;
+    public Servo lockingServo = null;
+    public Servo knockingServo = null;
     //public Servo  armMotorLower = null;
     public ColorSensor sensorColor = null;
     public DistanceSensor sensorDistance = null;
+    public GyroSensor sensorGyro = null;
 
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
@@ -113,9 +118,11 @@ public class HardwareDrive
         flagDrop = hwMap.get(Servo.class, "flagDrop");
         grabLeftServo = hwMap.get(Servo.class, "Grabber_Left_Servo");
         grabRightServo = hwMap.get(Servo.class, "Grabber_Right_Servo");
-      //  lockingServo = hwMap.get(Servo.class, "lockingServo");
+        lockingServo = hwMap.get(Servo.class, "lockingServo");
+        knockingServo = hwMap.get(Servo.class, "KnockingServo");
         sensorColor = hwMap.get(ColorSensor.class, "sensor_color_distance");
         sensorDistance = hwMap.get(DistanceSensor.class, "sensor_color_distance");
+        sensorGyro = hwMap.get(GyroSensor.class, "Gyroscope");
 
         // Set all motors to zero power
         frontLeftMotor.setPower(0);
@@ -156,7 +163,7 @@ public class HardwareDrive
         grabR = hwMap.get(Servo.class, "gR");*/
 
     }
-    public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward, double armGrabberControl, boolean stopMoveDown){
+    public void drive(double forward, double side, double spin, double arm, double slideToggle, boolean panelForward, boolean panelBackward, boolean flagDropping, boolean flagDropperRaise, boolean slowdownButton, boolean grabTrigger, boolean strutUp, boolean strutDown, double lowerArm, boolean armLockForward,boolean armLockBackward, double armGrabberControl, boolean stopMoveDown, boolean armKnocker, boolean unlockArm){
 
 
 
@@ -193,15 +200,20 @@ public class HardwareDrive
         if(backRightPower < -1.0)
             backRightPower = -1.0;
 
-
-        if(armLockForward == true){
-        //    lockingServo.setPosition(1);
-        }
-        else if(armLockBackward == true){
-        //    lockingServo.setPosition(0);
+        if(armKnocker == true){
+            knockingServo.setPosition(1);
         }
         else{
-        //    lockingServo.setPosition(.5);
+            knockingServo.setPosition(0);
+        }
+        if(armLockForward == true){
+            lockingServo.setPosition(1);
+        }
+        else if(armLockBackward == true){
+            lockingServo.setPosition(0);
+        }
+        else{
+            lockingServo.setPosition(.5);
         }
         if(strutUp){
             strutLeft.setPower(-1);
@@ -239,86 +251,38 @@ public class HardwareDrive
         else {
             panelPush.setPosition(0.5);
         }
-        grabLeftServo.setPosition(armGrabberControl+.1);
-        grabRightServo.setPosition(Math.abs(1-armGrabberControl)+.1);
-
+        if (unlockArm == true){
+            var.grabLock = false;
+        }
+        if (var.grabLock == false) {
+            grabLeftServo.setPosition(armGrabberControl + .5);
+            grabRightServo.setPosition(Math.abs(1 - armGrabberControl) - .5);
+        }
         //for drive direction
         frontLeftMotor.setPower(frontLeftPower);
         frontRightMotor.setPower(frontRightPower);
         backLeftMotor.setPower(backLeftPower);
         backRightMotor.setPower(backRightPower);
+
+        armLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        armRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         var.armPosition += (int) arm;
         armLeft.setTargetPosition(-var.armPosition);
         armRight.setTargetPosition(var.armPosition);
-        armLeft.setPower((-arm)*((Math.abs(armLeftPosition)/435.0)+.1));
-        armRight.setPower((arm)*((Math.abs(armLeftPosition)/435.0)+.1));
+
+        armLeft.setPower(1);
+        armRight.setPower(1);
+
+//        armLeft.setPower((-arm/2)*((Math.abs(armLeftPosition)/435.0)+.1));
+//        armRight.setPower((arm/2)*((Math.abs(armLeftPosition)/435.0)+.1));
         //armMotorMain.setPower(arm);
         //armMotorLowerToo.setPower(-arm);
         hook.setPosition(slideToggle);
 
         //armMotorLower.setPosition((lowerArm/2)+.5);
     }
-    public void spinRight(){
 
-        frontLeftMotor.setPower(var.POWER);
-        frontRightMotor.setPower(var.POWER);
-        backLeftMotor.setPower(var.POWER);
-        backRightMotor.setPower(var.POWER);
-
-    }
-    public void spinLeft(){
-
-        frontLeftMotor.setPower(-var.POWER);
-        frontRightMotor.setPower(-var.POWER);
-        backLeftMotor.setPower(-var.POWER);
-        backRightMotor.setPower(-var.POWER);
-
-    }
-    public void forward(){
-
-        frontLeftMotor.setPower(var.POWER);
-        frontRightMotor.setPower(-var.POWER);
-        backLeftMotor.setPower(var.POWER);
-        backRightMotor.setPower(-var.POWER);
-
-    }
-    public void back(){
-
-        frontLeftMotor.setPower(-var.POWER);
-        frontRightMotor.setPower(var.POWER);
-        backLeftMotor.setPower(-var.POWER);
-        backRightMotor.setPower(var.POWER);
-
-    }
-    public void left(){
-        frontLeftMotor.setPower(-var.POWER);
-        frontRightMotor.setPower(-var.POWER);
-        backLeftMotor.setPower(var.POWER);
-        backRightMotor.setPower(var.POWER);
-    }
-    public void right(){
-        frontLeftMotor.setPower(var.POWER);
-        frontRightMotor.setPower(var.POWER);
-        backLeftMotor.setPower(-var.POWER);
-        backRightMotor.setPower(-var.POWER);
-    }
-    public void stop(){
-        frontLeftMotor.setPower(0);
-        frontRightMotor.setPower(0);
-        backLeftMotor.setPower(0);
-        backRightMotor.setPower(0);
-        strutRight.setPower(0);
-        strutLeft.setPower(0);
-
-    }
-    public void strutLiftUp(){
-        strutLeft.setPower(var.POWER);
-        strutRight.setPower(var.POWER);
-    }
-    public void strutLowerDown(){
-        strutRight.setPower(-var.POWER);
-        strutLeft.setPower(-var.POWER);
-    }
     public void landerHookClose(){
         hook.setPosition(1);
     }
@@ -363,7 +327,9 @@ public class HardwareDrive
         strutRight.setPower(0);
         strutLeft.setPower(0);
     }
-    public void encoderSpin(int tick) {
+    public void encoderSpin(int angle) {
+        sensorGyro.calibrate();
+        int heading = sensorGyro.getHeading();
 
         frontLeftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -375,16 +341,16 @@ public class HardwareDrive
         backLeftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        frontLeftMotor.setTargetPosition(tick);
-        frontRightMotor.setTargetPosition(tick);
-        backLeftMotor.setTargetPosition(tick);
-        backRightMotor.setTargetPosition(tick);
+        frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        frontRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        backRightMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        frontLeftMotor.setPower(1);
-        frontRightMotor.setPower(1);
-        backLeftMotor.setPower(1);
-        backRightMotor.setPower(1);
-        while (frontLeftMotor.isBusy() && frontRightMotor.isBusy() && backLeftMotor.isBusy() && backRightMotor.isBusy()) {
+        frontLeftMotor.setPower(.75);
+        frontRightMotor.setPower(.75);
+        backLeftMotor.setPower(.75);
+        backRightMotor.setPower(.75);
+        while (!(heading<=angle+3 && heading>=angle-3)) {
 
         }
         frontLeftMotor.setPower(0);
